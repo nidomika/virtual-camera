@@ -1,5 +1,6 @@
 import { bindKeys } from './bindKeys'
 import { renderLoop } from './renderLoop'
+import { cubes } from './scene'
 import './style.css'
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas')!
@@ -17,7 +18,7 @@ const camera: Camera = {
   rotationY: 0,
   rotationZ: 0,
 }
-
+console.log(cubes)
 bindKeys(camera)
 
 renderLoop(() => {

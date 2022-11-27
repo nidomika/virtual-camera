@@ -1,15 +1,58 @@
-function cubeVertexesToFaces(vertexes: Vertex3d[]): Cube {
+function cubeVertexesToFaces(vertexes: Vertex3d[]): Cuboid {
   return [
-    [vertexes[0], vertexes[1], vertexes[2], vertexes[3]],
-    [vertexes[4], vertexes[5], vertexes[6], vertexes[7]],
-    [vertexes[0], vertexes[2], vertexes[4], vertexes[6]],
-    [vertexes[1], vertexes[3], vertexes[5], vertexes[7]],
-    [vertexes[0], vertexes[1], vertexes[4], vertexes[5]],
-    [vertexes[2], vertexes[3], vertexes[6], vertexes[7]],
+    [
+      { a: vertexes[0], b: vertexes[1] },
+      { a: vertexes[1], b: vertexes[2] },
+      { a: vertexes[2], b: vertexes[3] },
+      { a: vertexes[3], b: vertexes[0] },
+    ],
+    [
+      { a: vertexes[4], b: vertexes[5] },
+      { a: vertexes[5], b: vertexes[6] },
+      { a: vertexes[6], b: vertexes[7] },
+      { a: vertexes[7], b: vertexes[4] },
+    ],
+    [
+      { a: vertexes[0], b: vertexes[2] },
+      { a: vertexes[2], b: vertexes[4] },
+      { a: vertexes[4], b: vertexes[6] },
+      { a: vertexes[6], b: vertexes[0] },
+    ],
+    [
+      { a: vertexes[1], b: vertexes[3] },
+      { a: vertexes[3], b: vertexes[5] },
+      { a: vertexes[5], b: vertexes[7] },
+      { a: vertexes[7], b: vertexes[1] },
+    ],
+    [
+      { a: vertexes[0], b: vertexes[1] },
+      { a: vertexes[1], b: vertexes[4] },
+      { a: vertexes[4], b: vertexes[5] },
+      { a: vertexes[5], b: vertexes[0] },
+    ],
+    [
+      { a: vertexes[2], b: vertexes[3] },
+      { a: vertexes[3], b: vertexes[6] },
+      { a: vertexes[6], b: vertexes[7] },
+      { a: vertexes[7], b: vertexes[2] },
+    ],
   ]
 }
 
-export const cubes: Cube[] = [
+console.log(
+  cubeVertexesToFaces([
+    { x: 3, y: 2, z: -2 },
+    { x: 3, y: 0, z: -2 },
+    { x: 3, y: 2, z: 0 },
+    { x: 3, y: 0, z: 0 },
+    { x: 1, y: 2, z: -2 },
+    { x: 1, y: 0, z: -2 },
+    { x: 1, y: 2, z: 0 },
+    { x: 1, y: 0, z: 0 },
+  ])
+)
+
+export const cubes: Cuboid[] = [
   cubeVertexesToFaces([
     { x: 3, y: 2, z: -2 },
     { x: 3, y: 0, z: -2 },
