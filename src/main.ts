@@ -72,6 +72,66 @@ window.addEventListener('keydown', e => {
   }
 })
 
+let isMousePressed = false
+let lastMouseX = 0
+let lastMouseY = 0
+
+window.addEventListener('mousedown', e => {
+  isMousePressed = true
+  lastMouseX = e.clientX
+  lastMouseY = e.clientY
+})
+
+window.addEventListener('mouseup', () => {
+  isMousePressed = false
+})
+
+window.addEventListener('mousemove', e => {
+  if (isMousePressed) {
+    const deltaX = e.clientX - lastMouseX
+    const deltaY = e.clientY - lastMouseY
+
+    const moveSpeed = 0.001
+    const rotateSpeed = 0.001
+
+    // Modyfikuj swoje operacje na wektorach zgodnie z ruchem myszy
+    if (deltaY > 0) {
+      vectors3d.forEach(v => v.moveDown(moveSpeed))
+    } else if (deltaY < 0) {
+      vectors3d.forEach(v => v.moveUp(moveSpeed))
+    }
+
+    if (deltaX > 0) {
+      vectors3d.forEach(v => v.moveRight(moveSpeed))
+    } else if (deltaX < 0) {
+      vectors3d.forEach(v => v.moveLeft(moveSpeed))
+    }
+
+    // Obrót w osiach X i Y
+    vectors3d.forEach(v => {
+      v.rotateOY(deltaX * rotateSpeed)
+      v.rotateOX(-deltaY * rotateSpeed)
+    })
+
+    lastMouseX = e.clientX
+    lastMouseY = e.clientY
+  }
+})
+
+window.addEventListener('wheel', e => {
+  const zoomSpeed = 5
+
+  if (e.deltaY < 0) {
+    // Zoom in
+    if (cameraPov >= 15) {
+      cameraPov -= zoomSpeed
+    }
+  } else if (e.deltaY > 0) {
+    // Zoom out
+    cameraPov += zoomSpeed
+  }
+})
+
 renderLoop(() => {
   const vectors2d = vectors3d.map(vector => vector.to2d(cameraPov))
 
@@ -83,8 +143,6 @@ renderLoop(() => {
       ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
       ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
     }
-    // ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
-    // ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
     ctx.closePath()
     ctx.stroke()
   })

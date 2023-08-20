@@ -1,16 +1,16 @@
 import Point3d from './point3d'
-import Vector3d from './vector3d'
+import Vector from './vector'
 
 export default class Polygon {
   public points: Point3d[]
-  public vectors: Vector3d[]
+  public vectors: Vector[]
   public color: string
 
-  constructor(vectors: Vector3d[], color: string) {
+  constructor(vectors: Vector[], color: string) {
     this.vectors = vectors
     this.color = color
 
-    this.points = this.vectors.reduce((points: Point3d[], vector: Vector3d) => {
+    this.points = this.vectors.reduce((points: Point3d[], vector: Vector) => {
       points.push(vector.a)
       return points
     }, [])

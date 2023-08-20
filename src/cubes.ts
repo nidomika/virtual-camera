@@ -1,5 +1,25 @@
 import Point3d from './point3d'
-import Vector from './vector3d'
+import Vector from './vector'
+
+function cubeVertices(
+  point: Point3d,
+  width: number,
+  height: number,
+  depth: number
+): Point3d[] {
+  const { x, y, z } = point
+
+  return [
+    new Point3d(x, y, z), // lewy dolny przedni
+    new Point3d(x + width, y, z), // prawy dolny przedni
+    new Point3d(x, y + height, z), // lewy górny przedni
+    new Point3d(x + width, y + height, z), // prawy górny przedni
+    new Point3d(x, y, z + depth), // lewy dolny tylni
+    new Point3d(x + width, y, z + depth), // prawy dolny tylni
+    new Point3d(x, y + height, z + depth), // lewy górny tylni
+    new Point3d(x + width, y + height, z + depth), // prawy górny tylni
+  ]
+}
 
 function cubeVertexesToFaces(vertexes: Point3d[]) {
   return [
@@ -43,54 +63,9 @@ function cubeVertexesToFaces(vertexes: Point3d[]) {
 }
 
 export const cubes = [
-  cubeVertexesToFaces([
-    new Point3d(3, 2, -2),
-    new Point3d(3, 0, -2),
-    new Point3d(3, 2, 0),
-    new Point3d(3, 0, 0),
-    new Point3d(1, 2, -2),
-    new Point3d(1, 0, -2),
-    new Point3d(1, 2, 0),
-    new Point3d(1, 0, 0),
-  ]),
-  // cubeVertexesToFaces([
-  //   new Point3d(-1, 2, -1),
-  //   new Point3d(-1, 0, -1),
-  //   new Point3d(-1, 2, 0),
-  //   new Point3d(-1, 0, 0),
-  //   new Point3d(-2, 2, -1),
-  //   new Point3d(-2, 0, -1),
-  //   new Point3d(-2, 2, 0),
-  //   new Point3d(-2, 0, 0),
-  // ]),
-  // cubeVertexesToFaces([
-  //   new Point3d(-1, 1, -5),
-  //   new Point3d(-1, 0, -5),
-  //   new Point3d(-1, 1, -2),
-  //   new Point3d(-1, 0, -2),
-  //   new Point3d(-2, 1, -5),
-  //   new Point3d(-2, 0, -5),
-  //   new Point3d(-2, 1, -2),
-  //   new Point3d(-2, 0, -2),
-  // ]),
-  // cubeVertexesToFaces([
-  //   new Point3d(3, 2, -5),
-  //   new Point3d(3, 0, -5),
-  //   new Point3d(3, 2, -3),
-  //   new Point3d(3, 0, -3),
-  //   new Point3d(1, 2, -5),
-  //   new Point3d(1, 0, -5),
-  //   new Point3d(1, 2, -3),
-  //   new Point3d(1, 0, -3),
-  // ]),
-  // cubeVertexesToFaces([
-  //   new Point3d(3, 3, -8),
-  //   new Point3d(3, 0, -8),
-  //   new Point3d(3, 3, -6),
-  //   new Point3d(3, 0, -6),
-  //   new Point3d(1, 3, -8),
-  //   new Point3d(1, 0, -8),
-  //   new Point3d(1, 3, -6),
-  //   new Point3d(1, 0, -6),
-  // ]),
+  cubeVertexesToFaces(cubeVertices(new Point3d(5, -5, 5), 3, 3, 3)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(5, -5, 20), 10, 5, 5)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 5), 3, 3, 3)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 20), 5, 5, 5)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 35), 5, 5, 5)),
 ]
