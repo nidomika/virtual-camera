@@ -1,32 +1,14 @@
 import Point3d from './point3d'
+import Vector2d from './vector2d'
 
-export default class Vector {
+export default class Vector3d extends Vector2d {
   public a: Point3d
   public b: Point3d
 
   constructor(a: Point3d, b: Point3d) {
+    super(a.to2d(0), b.to2d(0))
     this.a = a
     this.b = b
-  }
-
-  moveUp(step: number) {
-    this.a.y += step
-    this.b.y += step
-  }
-
-  moveDown(step: number) {
-    this.a.y -= step
-    this.b.y -= step
-  }
-
-  moveLeft(step: number) {
-    this.a.x -= step
-    this.b.x -= step
-  }
-
-  moveRight(step: number) {
-    this.a.x += step
-    this.b.x += step
   }
 
   moveForward(step: number) {

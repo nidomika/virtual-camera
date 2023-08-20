@@ -9,3 +9,5 @@ type Camera = {
 }
 
 type Matrix = number[][]
+
+type Axis = 'x' | 'y' | 'z'

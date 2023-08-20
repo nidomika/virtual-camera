@@ -14,51 +14,61 @@ const vectors3d = cubes.flatMap(cube => cube.flatMap(face => face))
 window.addEventListener('keydown', e => {
   if (e.key === 'w') {
     // move up
-    vectors3d.forEach(v => v.moveDown(0.1))
+    vectors3d.forEach(v => v.moveDown(0.05))
   }
   if (e.key === 's') {
     // move down
-    vectors3d.forEach(v => v.moveUp(0.1))
+    vectors3d.forEach(v => v.moveUp(0.05))
   }
   if (e.key === 'a') {
     // move left
-    vectors3d.forEach(v => v.moveRight(0.1))
+    vectors3d.forEach(v => v.moveRight(0.05))
   }
   if (e.key === 'd') {
     // move right
-    vectors3d.forEach(v => v.moveLeft(0.1))
+    vectors3d.forEach(v => v.moveLeft(0.05))
   }
   if (e.key === 'e') {
     // move forward
-    vectors3d.forEach(v => v.moveBack(0.1))
+    vectors3d.forEach(v => v.moveBack(0.05))
   }
   if (e.key === 'q') {
     // move backward
-    vectors3d.forEach(v => v.moveForward(0.1))
+    vectors3d.forEach(v => v.moveForward(0.05))
   }
   if (e.key === 'r') {
     // rotate right
-    vectors3d.forEach(v => v.rotateOY(0.1))
+    vectors3d.forEach(v => v.rotateOY(0.05))
   }
   if (e.key === 'f') {
     // rotate left
-    vectors3d.forEach(v => v.rotateOY(-0.1))
+    vectors3d.forEach(v => v.rotateOY(-0.05))
   }
   if (e.key === 'ArrowDown') {
     // rotate down
-    vectors3d.forEach(v => v.rotateOX(0.1))
+    vectors3d.forEach(v => v.rotateOX(0.05))
   }
   if (e.key === 'ArrowUp') {
     // rotate up
-    vectors3d.forEach(v => v.rotateOX(-0.1))
+    vectors3d.forEach(v => v.rotateOX(-0.05))
   }
   if (e.key === 'ArrowLeft') {
     // rotate left
-    vectors3d.forEach(v => v.rotateOZ(0.1))
+    vectors3d.forEach(v => v.rotateOZ(0.05))
   }
   if (e.key === 'ArrowRight') {
     // rotate right
-    vectors3d.forEach(v => v.rotateOZ(-0.1))
+    vectors3d.forEach(v => v.rotateOZ(-0.05))
+  }
+
+  if (e.key === 'z') {
+    // zoom in
+    if (cameraPov < 15) return
+    cameraPov -= 10
+  }
+  if (e.key === 'x') {
+    // zoom out
+    cameraPov += 10
   }
 })
 

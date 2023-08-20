@@ -1,4 +1,4 @@
-export function rotateMatrix(angle: number, axis: 'x' | 'y' | 'z') {
+export function rotateMatrix(angle: number, axis: Axis) {
   const sin = Math.sin(angle)
   const cos = Math.cos(angle)
   switch (axis) {
