@@ -38,11 +38,11 @@ window.addEventListener('keydown', e => {
   }
   if (e.key === 'r') {
     // rotate right
-    vectors3d.forEach(v => v.rotateOY(0.05))
+    vectors3d.forEach(v => v.rotateOY(0.01))
   }
   if (e.key === 'f') {
     // rotate left
-    vectors3d.forEach(v => v.rotateOY(-0.05))
+    vectors3d.forEach(v => v.rotateOY(-0.01))
   }
   if (e.key === 'ArrowDown') {
     // rotate down
@@ -79,8 +79,12 @@ renderLoop(() => {
 
   vectors2d.forEach(vector => {
     ctx.beginPath()
-    ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
-    ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
+    if (vector.a && vector.b) {
+      ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
+      ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
+    }
+    // ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
+    // ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
     ctx.closePath()
     ctx.stroke()
   })

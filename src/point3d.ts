@@ -60,7 +60,8 @@ export default class Point3d {
     ]
   }
 
-  to2d(pov: number): Point2d {
+  to2d(pov: number): Point2d | null {
+    if (this.z <= 0) return null
     const projectedX = this.x / this.w
     const projectedY = this.y / this.w
     const x = (projectedX * pov) / this.z
