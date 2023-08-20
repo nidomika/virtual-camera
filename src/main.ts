@@ -1,6 +1,8 @@
 import { renderLoop } from './renderLoop'
 import { cubes } from './cubes'
 import './style.css'
+import Point3d from './point3d'
+import Vector from './vector'
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas')!
 const ctx = canvas.getContext('2d')!
@@ -8,8 +10,9 @@ ctx.canvas.width = window.innerWidth
 ctx.canvas.height = window.innerHeight
 ctx.fillStyle = 'red'
 
-let cameraPov = 120
+let cameraPov = 160
 const vectors3d = cubes.flatMap(cube => cube.flatMap(face => face))
+const cameraPoint = new Point3d(0, 0, 0)
 
 window.addEventListener('keydown', e => {
   if (e.key === 'w') {
@@ -132,18 +135,96 @@ window.addEventListener('wheel', e => {
   }
 })
 
-renderLoop(() => {
-  const vectors2d = vectors3d.map(vector => vector.to2d(cameraPov))
+const colors = [
+  '#EC9DED',
+  '#C880B7',
+  '#E396E0',
+  '#F1B5EB',
+  '#EFA9EC',
+  '#DA8FD2',
+]
+function calculateNormalVector(
+  point1: Point3d,
+  point2: Point3d,
+  point3: Point3d
+): Vector {
+  const vector1 = new Vector(point1, point2)
+  const vector2 = new Vector(point1, point3)
+  return vector1.crossProduct(vector2) // Tutaj używamy funkcji crossProduct do obliczenia iloczynu wektorowego
+}
 
+function calculateCenter(
+  point1: Point3d,
+  point2: Point3d,
+  point3: Point3d
+): Point3d {
+  const centerX = (point1.x + point2.x + point3.x) / 3
+  const centerY = (point1.y + point2.y + point3.y) / 3
+  const centerZ = (point1.z + point2.z + point3.z) / 3
+  return new Point3d(centerX, centerY, centerZ)
+}
+
+renderLoop(() => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  vectors2d.forEach(vector => {
-    ctx.beginPath()
-    if (vector.a && vector.b) {
-      ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
-      ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
-    }
-    ctx.closePath()
-    ctx.stroke()
+  let facesWithDepth: { vectors: any[]; z: number; color: string }[] = []
+
+  cubes.forEach(cube => {
+    cube.forEach((face, i) => {
+      const vectors2d = face.map(vector => vector.to2d(cameraPov))
+
+      const z =
+        face.flatMap(x => [x.a, x.b]).reduce((acc, curr) => acc + curr.z, 0) / 4
+
+      facesWithDepth.push({
+        vectors: vectors2d,
+        z: z,
+        color: colors[i],
+      })
+    })
   })
+
+  facesWithDepth.sort((a, b) => b.z - a.z)
+
+  facesWithDepth
+    .filter(face => face.vectors.every(vector => vector.a && vector.b))
+    .forEach(faceData => {
+      const vectors2d = faceData.vectors
+
+      ctx.fillStyle = faceData.color
+      ctx.beginPath()
+
+      ctx.moveTo(
+        canvas.width / 2 + vectors2d[0].a.x,
+        canvas.height / 2 - vectors2d[0].a.y
+      )
+
+      vectors2d.forEach(vector => {
+        ctx.lineTo(
+          canvas.width / 2 + vector.b.x,
+          canvas.height / 2 - vector.b.y
+        )
+      })
+
+      ctx.closePath()
+
+      ctx.fill()
+      ctx.stroke()
+    })
 })
+
+// renderLoop(() => {
+//   const vectors2d = vectors3d.map(vector => vector.to2d(cameraPov))
+
+//   ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+//   vectors2d.forEach(vector => {
+//     ctx.beginPath()
+//     if (vector.a && vector.b) {
+//       ctx.moveTo(canvas.width / 2 + vector.a.x, canvas.height / 2 - vector.a.y)
+//       ctx.lineTo(canvas.width / 2 + vector.b.x, canvas.height / 2 - vector.b.y)
+//     }
+//     ctx.closePath()
+//     ctx.stroke()
+//   })
+// })

@@ -63,9 +63,9 @@ function cubeVertexesToFaces(vertexes: Point3d[]) {
 }
 
 export const cubes = [
-  cubeVertexesToFaces(cubeVertices(new Point3d(5, -5, 5), 3, 3, 3)),
-  cubeVertexesToFaces(cubeVertices(new Point3d(5, -5, 20), 10, 5, 5)),
-  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 5), 3, 3, 3)),
-  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 20), 5, 5, 5)),
-  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 35), 5, 5, 5)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(5, -5, 10), 3, 3, 3)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-5, -5, 10), 3, 3, 3)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(10, -5, 15), 5, 5, 5)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-10, -5, 15), 5, 5, 5)),
+  cubeVertexesToFaces(cubeVertices(new Point3d(-10, -5, 25), 25, 10, 10)),
 ]
