@@ -1,19 +1,14 @@
 import { renderLoop } from './renderLoop'
 import { cubes } from './cubes'
 import './style.css'
-// import Point3d from './point3d'
-// import Vector from './vector'
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas')!
 const ctx = canvas.getContext('2d')!
 ctx.canvas.width = window.innerWidth
 ctx.canvas.height = window.innerHeight
-ctx.fillStyle = 'red'
 
-let cameraPov = 160
+let cameraPov = 200
 const vectors3d = cubes.flatMap(cube => cube.flatMap(face => face))
-// const cameraPoint = new Point3d(0, 0, 0)
-
 window.addEventListener('keydown', e => {
   if (e.key === 'w') {
     // move up
@@ -97,7 +92,6 @@ window.addEventListener('mousemove', e => {
     const moveSpeed = 0.001
     const rotateSpeed = 0.001
 
-    // Modyfikuj swoje operacje na wektorach zgodnie z ruchem myszy
     if (deltaY > 0) {
       vectors3d.forEach(v => v.moveDown(moveSpeed))
     } else if (deltaY < 0) {
@@ -110,7 +104,6 @@ window.addEventListener('mousemove', e => {
       vectors3d.forEach(v => v.moveLeft(moveSpeed))
     }
 
-    // Obrót w osiach X i Y
     vectors3d.forEach(v => {
       v.rotateOY(deltaX * rotateSpeed)
       v.rotateOX(-deltaY * rotateSpeed)
@@ -124,13 +117,11 @@ window.addEventListener('mousemove', e => {
 window.addEventListener('wheel', e => {
   const zoomSpeed = 5
 
-  if (e.deltaY < 0) {
-    // Zoom in
+  if (e.deltaY > 0) {
     if (cameraPov >= 15) {
       cameraPov -= zoomSpeed
     }
-  } else if (e.deltaY > 0) {
-    // Zoom out
+  } else if (e.deltaY < 0) {
     cameraPov += zoomSpeed
   }
 })
@@ -141,37 +132,16 @@ const colors = [
   '#E396E0',
   '#F1B5EB',
   '#EFA9EC',
-  '#DA8FD2'
+  '#DA8FD2',
 ]
-
-// function calculateNormalVector(
-//   point1: Point3d,
-//   point2: Point3d,
-//   point3: Point3d
-// ): Vector {
-//   const vector1 = new Vector(point1, point2)
-//   const vector2 = new Vector(point1, point3)
-//   return vector1.crossProduct(vector2) // Tutaj używamy funkcji crossProduct do obliczenia iloczynu wektorowego
-// }
-
-// function calculateCenter(
-//   point1: Point3d,
-//   point2: Point3d,
-//   point3: Point3d
-// ): Point3d {
-//   const centerX = (point1.x + point2.x + point3.x) / 3
-//   const centerY = (point1.y + point2.y + point3.y) / 3
-//   const centerZ = (point1.z + point2.z + point3.z) / 3
-//   return new Point3d(centerX, centerY, centerZ)
-// }
 
 renderLoop(() => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
   let facesWithDepth: { vectors: any[]; z: number; color: string }[] = []
 
-  cubes.forEach(cube => {
-    cube.forEach((face, i) => {
+  cubes.forEach((cube, i) => {
+    cube.forEach(face => {
       const vectors2d = face.map(vector => vector.to2d(cameraPov))
 
       const z =
@@ -180,7 +150,7 @@ renderLoop(() => {
       facesWithDepth.push({
         vectors: vectors2d,
         z: z,
-        color: colors[i]
+        color: colors[i],
       })
     })
   })
@@ -208,9 +178,9 @@ renderLoop(() => {
       })
 
       ctx.closePath()
-
       ctx.fill()
-      ctx.stroke()
+
+      // ctx.stroke()
     })
 })
 
