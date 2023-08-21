@@ -1,8 +1,8 @@
 import { renderLoop } from './renderLoop'
 import { cubes } from './cubes'
 import './style.css'
-import Point3d from './point3d'
-import Vector from './vector'
+// import Point3d from './point3d'
+// import Vector from './vector'
 
 const canvas = document.querySelector<HTMLCanvasElement>('#canvas')!
 const ctx = canvas.getContext('2d')!
