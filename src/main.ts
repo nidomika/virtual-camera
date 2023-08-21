@@ -12,7 +12,7 @@ ctx.fillStyle = 'red'
 
 let cameraPov = 160
 const vectors3d = cubes.flatMap(cube => cube.flatMap(face => face))
-const cameraPoint = new Point3d(0, 0, 0)
+// const cameraPoint = new Point3d(0, 0, 0)
 
 window.addEventListener('keydown', e => {
   if (e.key === 'w') {
@@ -141,28 +141,29 @@ const colors = [
   '#E396E0',
   '#F1B5EB',
   '#EFA9EC',
-  '#DA8FD2',
+  '#DA8FD2'
 ]
-function calculateNormalVector(
-  point1: Point3d,
-  point2: Point3d,
-  point3: Point3d
-): Vector {
-  const vector1 = new Vector(point1, point2)
-  const vector2 = new Vector(point1, point3)
-  return vector1.crossProduct(vector2) // Tutaj używamy funkcji crossProduct do obliczenia iloczynu wektorowego
-}
 
-function calculateCenter(
-  point1: Point3d,
-  point2: Point3d,
-  point3: Point3d
-): Point3d {
-  const centerX = (point1.x + point2.x + point3.x) / 3
-  const centerY = (point1.y + point2.y + point3.y) / 3
-  const centerZ = (point1.z + point2.z + point3.z) / 3
-  return new Point3d(centerX, centerY, centerZ)
-}
+// function calculateNormalVector(
+//   point1: Point3d,
+//   point2: Point3d,
+//   point3: Point3d
+// ): Vector {
+//   const vector1 = new Vector(point1, point2)
+//   const vector2 = new Vector(point1, point3)
+//   return vector1.crossProduct(vector2) // Tutaj używamy funkcji crossProduct do obliczenia iloczynu wektorowego
+// }
+
+// function calculateCenter(
+//   point1: Point3d,
+//   point2: Point3d,
+//   point3: Point3d
+// ): Point3d {
+//   const centerX = (point1.x + point2.x + point3.x) / 3
+//   const centerY = (point1.y + point2.y + point3.y) / 3
+//   const centerZ = (point1.z + point2.z + point3.z) / 3
+//   return new Point3d(centerX, centerY, centerZ)
+// }
 
 renderLoop(() => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -179,7 +180,7 @@ renderLoop(() => {
       facesWithDepth.push({
         vectors: vectors2d,
         z: z,
-        color: colors[i],
+        color: colors[i]
       })
     })
   })
