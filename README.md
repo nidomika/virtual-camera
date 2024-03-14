@@ -1,5 +1,7 @@
 # virtual-camera
 University project - implementation of virtual camera from scratch using TypeScript
+![image](https://github.com/nidomika/virtual-camera/assets/34137726/10a7a127-5a66-42de-a882-7f2c1ebc7068)
+
 ## Controls
 ### Up/down/left/right
 | Key              | Function                    |
